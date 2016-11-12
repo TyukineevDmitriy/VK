@@ -1,5 +1,5 @@
 import unittest
-from newsticker import *
+from vk_client import *
 
 class TestStringMethods(unittest.TestCase):
 
@@ -17,6 +17,8 @@ class TestStringMethods(unittest.TestCase):
         newsticker.sort_by_likes()
         self.assertEqual(newsticker.newsticker[0]["text"],
                          "У каждого футболиста есть девушка, но не у каждой девушки есть футболист…")
+
+
 
 if __name__ == '__main__':
     unittest.main()

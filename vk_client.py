@@ -1,13 +1,26 @@
 from vk_requests import *
-import datetime
+from multiprocessing.dummy import Pool as ThreadPool
+from models.vk_models import *
 
-class Newsticker:
+class VK_client:
 
-    def __init__(self, number):
-        vk_requests = Vk_requests()
-        members = vk_requests.get_members()
-        friends = vk_requests.get_all_friends_async(members)
-        posts = vk_requests.get_friends_posts_async(friends.get(number))
+    def __init__(self):
+        self.vk_requests = VK_requests()
+
+
+    def get_members(self):
+        return [User(member['id'], member['first_name'], member['last_name'],
+                     member['photo_100'] if 'photo_100' in member else None, True)
+                for member in self.vk_requests.get_members()
+                if 'deactivated' not in member]
+
+    def get_friends(self, user_id):
+        return {"user_id": user_id, "friends": [User(friend['id'], friend['first_name'], friend['last_name'],
+                     friend['photo_100'] if 'photo_100' in friend else None, False)
+                for friend in self.vk_requests.get_friends(user_id)
+                if 'deactivated' not in friend and 'hidden' not in friend]}
+
+        '''posts = vk_requests.get_friends_posts_async(friends.get(number))
         self.newsticker = []
         for friend in posts:
             for i in range(len(friend["wall"])):
@@ -23,20 +36,8 @@ class Newsticker:
                             photo = attachment["photo"]["photo_604"]
                         if attachment["type"] == "audio":
                             audio = attachment["audio"]["url"]
-                date = datetime.datetime.fromtimestamp(int(post["date"])).strftime('%Y-%m-%d %H:%M:%S')
+                date = datetime.datetime.fromtimestamp(int(post["date"]))
                 self.newsticker.append({"name":friend["first_name"] + " " + friend["last_name"],"avatar":friend["avatar"],
                                    "text":post["text"],"likes":post["likes"],"reposts":post["reposts"],
                                    "comments":post["comments"],"photo":photo,"audio":audio,"post_reference":post_reference,
-                                   "date":date})
-
-    def sort_by_likes(self):
-        self.newsticker.sort(key=lambda x: x["likes"]["count"],reverse=True)
-
-    def sort_by_reposts(self):
-        self.newsticker.sort(key=lambda x: x["reposts"]["count"],reverse=True)
-
-    def sort_by_comments(self):
-        self.newsticker.sort(key=lambda x: x["comments"]["count"],reverse=True)
-
-    def get_posts_count(self):
-        return len(self.newsticker)
+                                   "date":date})'''
