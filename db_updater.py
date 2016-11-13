@@ -1,3 +1,5 @@
+from multiprocessing.dummy import Pool as ThreadPool
+
 from vk_client import *
 from config.db_config import *
 
@@ -7,7 +9,7 @@ class DB_updater:
         self.vk_client = VK_client()
         self.db = DB_config()
 
-    def update(self):
+    def update_users(self):
         unique_users_ids = []
         db_users_ids = set([user.id for user in self.db.get_users()])
         vk_users = self.vk_client.get_members()
