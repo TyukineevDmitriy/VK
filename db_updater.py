@@ -34,7 +34,7 @@ class DB_updater:
                     unique_users_ids.append(friend.id)
                 if friend.id not in db_friends_ids:
                     self.db.create_friend(member['user_id'], friend.id)
-            db_friends_ids = set(db_friends_ids if db_friends is not None else [])
+            db_friends_ids = set(db_friends_ids)
             self.db.delete_friends(member['user_id'], db_friends_ids.difference(
                 [friend.id for friend in member['friends']]))
         self.db.delete_users(db_users_ids.difference(unique_users_ids))

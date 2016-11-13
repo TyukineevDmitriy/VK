@@ -23,6 +23,7 @@ class DB_config:
 
     def delete_users(self, users_ids):
         for user_id in users_ids:
+            print(user_id)
             User.get(User.id == user_id).delete_instance()
 
     def get_friends_of_user(self, user_id):
@@ -33,9 +34,7 @@ class DB_config:
         db_user = User.get(User.id == user_id)
         for friend_id in friends_ids:
             db_friend = User.get(User.id == friend_id)
-            #record_id = Friend.select().join(User).where((Friend.user == db_user) & (Friend.friend == db_friend))
-            #Friend.select().where((Friend.user == db_user) & (Friend.friend == db_friend)).get().delete_instance()
-            Friend.get((Friend.user == db_user) & (Friend.friend == db_friend))#.delete_instance()
+            Friend.get((Friend.user == db_user) & (Friend.friend == db_friend)).delete_instance()
 
     def create_friend(self, user_id, friend_id):
         db_user = User.get(User.id == user_id)
