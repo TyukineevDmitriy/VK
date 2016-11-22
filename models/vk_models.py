@@ -7,8 +7,13 @@ class User:
         self.is_member = is_member
 
 class Post:
-    def __init__(self, post_id, user_id, text, attachments):
-        self.post_id = post_id
+    def __init__(self, user_id, post_id, text, date, comments, likes, reposts, reposted_from, attachments):
         self.user_id = user_id
+        self.post_id = post_id
         self.text = text
+        self.date = date
+        self.comments = comments
+        self.likes = likes
+        self.reposts = reposts
+        self.reposted_from = reposted_from
         self.attachments = attachments
