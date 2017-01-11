@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose your character</title>
+    <link rel="shortcut icon" type="image/png"
+          href="http://az616578.vo.msecnd.net/files/2016/06/03/636005857799808316-1872301500_VeTl4V1.png">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
+</head>
+<body>
+     <div class="container">
+
+      <div class="page-header">
+      </div>
+
+         <div class="row">
+
+    {% for member in members %}
+    <div class="col-md-3" align="center">
+        <div class="row">
+            <img alt="" src="{{ member.photo }}">
+        </div>
+        <div class="row">
+            <a href="/user/{{ member.id }}/">{{ member.first_name }} {{ member.last_name }}</a>
+        </div>
+        <br/>
+
+    </div>
+
+            <!-- if last column in row -->
+            {% if loop.index is divisibleby(4) and not loop.last %}
+            </div><div class="row">
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+    </div><!-- /.container -->
+</body>
+</html>
+https://pp.vk.me/c637816/v637816421/1f300/KjM70AYyZBc.jpg

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.first_name }} {{ user.last_name }}</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" type="image/png"
+          href="http://az616578.vo.msecnd.net/files/2016/06/03/636005857799808316-1872301500_VeTl4V1.png">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h2>Sorting of news feed</h2>
+            <div class="row">
+                <form method="post">
+                    <label class="radio-inline">
+                        <input checked type="radio" name="sorting" value="by_date">By date</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_comments">By comments</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_likes">By likes</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_reposts">By reposts</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_normalized_comments">By normalized comments</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_normalized_likes">By normalized likes</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_normalized_reposts">By normalized reposts</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sorting" value="by_shares">By shares</label>
+                    <div>
+                        <input type="submit" class="btn btn-success" value="Sort" style="margin-top: 4px">
+                    </div>
+                 </form>
+            </div>
+        </div>
+        {% for post in news_feed %}
+        <div class="row well">
+            <div class="col-md-2" align="center">
+                <img src="{{ post.user.photo }}"/>
+            </div>
+            <div class="col-md-10" align="left">
+                <a href="http://vk.com/id{{ post.user.id }}">{{ post.user.first_name }} {{ post.user.last_name }}</a>
+                <div style="color: grey">{{ post.date }}</div>
+            </div>
+        </div>
+        {% if post.text != "" %}
+        <div>{{ post.text }}</div>
+        <br/>
+        {% endif %}
+        {% if post.attachments is not none %}
+            {% for att in post.attachments %}
+                {% if att.type == 'photo' %}
+                    <div><img src="{{ att.url }}"/></div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+            {% for att in post.attachments %}
+                {% if att.type == 'link' %}
+                    <div><a href="{{ att.url }}">{{ att.url }}</a></div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if post.reposted_from is not none %}
+            <div><a href="http://vk.com/id{{ post.user.id }}?w=wall{{ post.reposted_from }}">
+                Original post</a></div>
+            <br/>
+        {% endif %}
+        <div>
+            <div style="color: green; display: inline">likes: </div>
+            <div style="color: black; display: inline">{{ post.likes_count }}</div>
+            <div style="color: blue; display: inline">reposts: </div>
+            <div style="color: black; display: inline">{{ post.reposts_count }}</div>
+            <div style="color: black; display: inline">comments: </div>
+            <div style="color: black; display: inline">{{ post.comments_count }}</div>
+            {% if post.share_count is not none %}
+            <div style="color: blueviolet; display: inline">shares: </div>
+            <div style="color: black; display: inline">{{ post.share_count }}</div>
+            {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>
