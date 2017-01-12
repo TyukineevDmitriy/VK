@@ -11,7 +11,7 @@ class IndexHandler(RequestHandler):
         self.render_template('index.html', members=members)
 
 
-class OtherHandler(RequestHandler):
+class NewsFeedHandler(RequestHandler):
 
     def get(self, user_id):
         db_config = DBConfig()

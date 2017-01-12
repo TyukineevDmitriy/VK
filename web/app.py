@@ -15,7 +15,7 @@ class ConfigSettings(object):
 
 routes = (
     ('/', 'web.handlers.IndexHandler', 'index'),
-    ('/user/{id}/', 'web.handlers.OtherHandler', 'other'),
+    ('/user/{id}/', 'web.handlers.NewsFeedHandler', 'news_feed'),
 )
 
 
